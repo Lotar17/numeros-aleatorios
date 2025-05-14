@@ -22,6 +22,10 @@ def frequency_monobit_test(numeros: str):
 
 
 def test_de_frecuencia_por_bloque(numeros: str):
+    """
+    NIST recomiena al menos 100 bits, es decir, se recomienda que
+    el parámetro numeros >= 100 y que el tamaño_bloque >= 20
+    """
     n = len(numeros)
     divisores = set()
     limite = int(isqrt(n))
@@ -32,7 +36,6 @@ def test_de_frecuencia_por_bloque(numeros: str):
     print("Valores de tamaño_bloque posibles: ", sorted(divisores))
     tamaño_bloque = int(input("Ingrese un valor posible del tamaño de bloque: "))
     bloques = [numeros[i : i + tamaño_bloque] for i in range(0, n, tamaño_bloque)]
-    print(bloques)
     proporcion_de_unos_por_bloque = []
     for bloque in bloques:
         proporcion_de_unos_por_bloque.append(
@@ -45,5 +48,23 @@ def test_de_frecuencia_por_bloque(numeros: str):
     print(proporcion_convertida)
     chi_cuadrado = 4 * tamaño_bloque * sum(proporcion_convertida)
     p_value = chi2.sf(chi_cuadrado, len(bloques) - 1)
-    print(p_value)
     return p_value >= 0.01
+
+
+def runs_test(numeros: str):
+    n = len(numeros)
+    cantidad_de_unos = numeros.count("1")
+    frecuencia_pre_test = cantidad_de_unos / n
+    tao = 2 / sqrt(n)
+    sumatoria = 1
+    if abs(frecuencia_pre_test - 0.5) < tao:
+        for numeroActual, numeroSiguiente in zip(numeros, numeros[1:]):
+            if numeroActual != numeroSiguiente:
+                sumatoria += 1
+        dividendo = abs(
+            sumatoria - 2 * n * frecuencia_pre_test * (1 - frecuencia_pre_test)
+        )
+        divisor = 2 * sqrt(2 * n) * frecuencia_pre_test * (1 - frecuencia_pre_test)
+        p_value = erfc(dividendo / divisor)
+        return p_value >= 0.01
+    return False

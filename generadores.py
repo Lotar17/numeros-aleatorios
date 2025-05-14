@@ -16,3 +16,9 @@ def generador_randu(semilla: int, ciclos: int):
     for _ in range(ciclos):
         semilla = (2**16 + 3) * semilla % (2**31)
     return semilla
+
+
+def generador_rand(semilla: int, ciclos: int):
+    for _ in range(ciclos):
+        semilla = (7**5) * semilla % (2**31 - 1)
+    return semilla

@@ -1,12 +1,18 @@
-def generador_metodo_cuadrados(seed: int, n: int) -> int:
+def generador_metodo_cuadrados(semilla: int, n: int) -> int:
     """
     Ejecuta n iteraciones del método de cuadrados medios
     y devuelve solo la semilla resultante al final.
     """
     for _ in range(n):
-        x = seed * seed
+        x = semilla * semilla
         if x >= 100:
-            seed = (x // 100) % 10000
+            semilla = (x // 100) % 10000
         else:
-            seed = 0
-    return seed
+            semilla = 0
+    return semilla
+
+
+def generador_randu(semilla: int, ciclos: int):
+    for _ in range(ciclos):
+        semilla = (2**16 + 3) * semilla % (2**31)
+    return semilla

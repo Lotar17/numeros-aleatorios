@@ -14,4 +14,4 @@ lista_numeros_en_binario = ""
 for _ in range(n):
     pass
 
-print(generadores.generador_metodo_cuadrados(9731, 1))
+print(generadores.generador_randu(12, 45))

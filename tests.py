@@ -1,5 +1,6 @@
 from math import erfc, isqrt, sqrt
 import re
+from numpy import fft
 from scipy.stats import chi2
 
 
@@ -12,10 +13,7 @@ def frequency_monobit_test(numeros: str):
     numeros_transformados = numeros.replace("0", "-1")
     tokens = re.findall(r"-?1", numeros_transformados)
     lista_transformada = list(map(int, tokens))
-    for numero in lista_transformada:
-        print(numero)
     total = sum(lista_transformada)
-    print("Total: ", total)
     solucion_obs = abs(total) / sqrt(n)
     p_value = erfc(solucion_obs / sqrt(2))
     return p_value >= 0.1
@@ -52,6 +50,10 @@ def test_de_frecuencia_por_bloque(numeros: str):
 
 
 def runs_test(numeros: str):
+    """
+    NIST recomienda que la cantidad de bits sea mayor o igual a 100,
+    es decir, que len(numeros) >= 100
+    """
     n = len(numeros)
     cantidad_de_unos = numeros.count("1")
     frecuencia_pre_test = cantidad_de_unos / n
@@ -68,3 +70,32 @@ def runs_test(numeros: str):
         p_value = erfc(dividendo / divisor)
         return p_value >= 0.01
     return False
+
+
+def transformada_discreta_de_fourier(numeros: str):
+    """
+    NIST recomienda como mínimo 100 bits, es decir,
+    len(numeros) >= 100
+    """
+    n = len(numeros)
+    numeros_transformados = numeros.replace("0", "-1")
+    tokens = re.findall(r"-?1", numeros_transformados)
+    lista_transformada = list(map(int, tokens))
+    s = fft.fft(lista_transformada)
+    n2 = len(s)
+    # Tomar los primeros n/2 elementos
+    S_prime = s[: n2 // 2]
+    # Calcular la magnitud de cada componente
+    m = abs(S_prime)
+
+    # Descartar el componente de frecuencia cero ya que ese primer coeficiente refleja simplemente el sesgo global, no un patrón periódico “real” a ninguna frecuencia.
+    m_true_peaks = m[1:]
+    t = sqrt(2.995732274 * n)
+    n0 = 0.95 * n / 2
+    n1 = 0
+    for valor in m_true_peaks:
+        if valor < t:
+            n1 += 1
+    d = (n1 - n0) / sqrt(n * 0.95 * 0.05 / 2)
+    p_value = erfc(abs(d) / sqrt(2))
+    return p_value >= 0.01

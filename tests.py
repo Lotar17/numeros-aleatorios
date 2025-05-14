@@ -39,11 +39,9 @@ def test_de_frecuencia_por_bloque(numeros: str):
         proporcion_de_unos_por_bloque.append(
             round(bloque.count("1") / tamaño_bloque, 1)
         )
-    print(proporcion_de_unos_por_bloque)
     proporcion_convertida = list(
         map(lambda x: (x - 0.5) ** 2, proporcion_de_unos_por_bloque)
     )
-    print(proporcion_convertida)
     chi_cuadrado = 4 * tamaño_bloque * sum(proporcion_convertida)
     p_value = chi2.sf(chi_cuadrado, len(bloques) - 1)
     return p_value >= 0.01

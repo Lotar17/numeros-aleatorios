@@ -79,6 +79,10 @@ print(
 )
 """
 
-sucesion_rand = generadores.generador_rand()
+sucesion_rand = generadores.generador_rand(10)
 for numero in sucesion_rand:
+    print(numero)
+print("RANDU")
+sucesion_randu = generadores.generador_randu(10)
+for numero in sucesion_randu:
     print(numero)

@@ -8,7 +8,8 @@ from tests import (
     transformada_discreta_de_fourier,
 )
 
-CANTIDAD_DE_NUMEROS_A_GENERAR = 10000
+"""    
+CANTIDAD_DE_NUMEROS_A_GENERAR = 250000
 SEMILLA = 9731
 CICLOS = 10
 
@@ -31,15 +32,15 @@ for _ in range(CANTIDAD_DE_NUMEROS_A_GENERAR):
         semilla_cuadrados, CICLOS
     )
     lista_numeros_cuadrados.append(semilla_cuadrados)
-    lista_numeros_cuadrados_bits += bin(semilla_cuadrados)
+    lista_numeros_cuadrados_bits += bin(semilla_cuadrados)[2:]
 
     semilla_rand = generadores.generador_rand(semilla_rand, CICLOS)
     lista_numeros_rand.append(semilla_rand)
-    lista_numeros_rand_bits += bin(semilla_rand)
+    lista_numeros_rand_bits += bin(semilla_rand)[2:]
 
     semilla_randu = generadores.generador_randu(semilla_randu, CICLOS)
     lista_numeros_randu.append(semilla_randu)
-    lista_numeros_randu_bits += bin(semilla_randu)
+    lista_numeros_randu_bits += bin(semilla_randu)[2:]
 
 
 print("TEST 1: Frecuencia de monobit")
@@ -76,3 +77,8 @@ print(
 print(
     f"GCL: RANDU : TEST 1: {resultado_randu_test_1} TEST 2: {resultado_randu_test_2} TEST3: {resultado_randu_test_3} TEST4: {resultado_randu_test_4}"
 )
+"""
+
+sucesion_rand = generadores.generador_rand()
+for numero in sucesion_rand:
+    print(numero)

@@ -1,18 +1,26 @@
 import numpy as np
 
 
-def generador_metodo_cuadrados(semilla: int, n: int) -> int:
+def generador_metodo_cuadrados(n=1500, semilla=9731):
     """
-    Ejecuta n iteraciones del método de cuadrados medios
-    y devuelve solo la semilla resultante al final.
+    Genera n valores pseudoaleatorios en (0,1)
+    usando el método de cuadrados medios de 4 dígitos.
     """
-    for _ in range(n):
-        x = semilla * semilla
-        if x >= 100:
-            semilla = (x // 100) % 10000
-        else:
-            semilla = 0
-    return semilla
+    x = np.empty(n, dtype=np.int64)
+    u = np.empty(n, dtype=np.float64)
+
+    semilla = semilla % 10000
+    x[0] = semilla
+    u[0] = semilla / 10000
+
+    for i in range(1, n):
+        cuadrado = x[i - 1] * x[i - 1]
+        s = str(cuadrado).zfill(8)
+        semilla_nueva = int(s[2:6])
+        x[i] = semilla_nueva
+        u[i] = semilla_nueva / 10000
+
+    return u
 
 
 def generador_rand(n=1500, semilla=None):

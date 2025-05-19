@@ -86,3 +86,7 @@ print("RANDU")
 sucesion_randu = generadores.generador_randu(10)
 for numero in sucesion_randu:
     print(numero)
+print("CUADRADOS")
+sucesion_cuadrados = generadores.generador_metodo_cuadrados(10)
+for numero in sucesion_cuadrados:
+    print(numero)

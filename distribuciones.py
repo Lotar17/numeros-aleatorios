@@ -1,7 +1,7 @@
 from math import exp
 import matplotlib.pyplot as plt
 
-from numpy import empty, float64, log, ndarray, linspace
+from numpy import empty, float64, log, ndarray, linspace, zeros_like
 
 
 class Exponencial:
@@ -28,18 +28,23 @@ class Exponencial:
             valores[i] = -media * log(r[i])
         return valores
 
-    def graficar(self):
+    def graficar(self, valores):
         x = linspace(0, self.x)
         y = empty(len(x), dtype=float64)
         for i in range(len(x)):
             y[i] = self.densidad(x[i])
-        plt.figure(figsize=(10, 5))
-        plt.subplot(121)
+        plt.figure(figsize=(14, 7))
+        plt.subplot(2, 2, 1)
         plt.plot(x, y)
         plt.title("Funcion densidad")
         for i in range(len(x)):
             y[i] = self.acumulativa(x[i])
-        plt.subplot(122)
+        plt.subplot(2, 2, 2)
         plt.plot(x, y)
         plt.title("Funcion acumulativa")
+        plt.subplot(2, 2, 3)
+        plt.hist(valores, bins=50, density=True)
+        plt.title("Histograma de numeros pseudoaleatorios con distribución exponencial")
         plt.show()
+
+        plt.close()

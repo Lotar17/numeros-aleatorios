@@ -84,7 +84,7 @@ sucesion_rand = generadores.generador_rand(10)
 for numero in sucesion_rand:
     print(numero)
 print("RANDU")
-sucesion_randu = generadores.generador_randu(10)
+sucesion_randu = generadores.generador_randu(200)
 for numero in sucesion_randu:
     print(numero)
 print("CUADRADOS")
@@ -94,5 +94,5 @@ for numero in sucesion_cuadrados:
 
 print("CREO EL OBJETO EXPONENCIAL")
 e = Exponencial()
-print(e.exponencial_valores(sucesion_cuadrados))
-e.graficar()
+valores_exponenciales = e.exponencial_valores(sucesion_randu)
+e.graficar(valores_exponenciales)

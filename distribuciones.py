@@ -1,18 +1,19 @@
 from math import exp
+import matplotlib.pyplot as plt
 
-from numpy import empty, float64, log, ndarray
+from numpy import empty, float64, log, ndarray, linspace
 
 
-class exponencial:
+class Exponencial:
     def __init__(self, alfa=2, x=1) -> None:
         self.alfa = alfa
         self.x = x
 
-    def densidad(self):
-        return self.alfa * exp(-self.alfa * self.x)
+    def densidad(self, x):
+        return self.alfa * exp(-self.alfa * x)
 
-    def acumulativa(self):
-        return 1 - exp(-self.alfa * self.x)
+    def acumulativa(self, x):
+        return 1 - exp(-self.alfa * x)
 
     def media(self):
         return 1 / self.alfa
@@ -26,3 +27,19 @@ class exponencial:
         for i in range(len(r)):
             valores[i] = -media * log(r[i])
         return valores
+
+    def graficar(self):
+        x = linspace(0, self.x)
+        y = empty(len(x), dtype=float64)
+        for i in range(len(x)):
+            y[i] = self.densidad(x[i])
+        plt.figure(figsize=(10, 5))
+        plt.subplot(121)
+        plt.plot(x, y)
+        plt.title("Funcion densidad")
+        for i in range(len(x)):
+            y[i] = self.acumulativa(x[i])
+        plt.subplot(122)
+        plt.plot(x, y)
+        plt.title("Funcion acumulativa")
+        plt.show()

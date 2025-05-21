@@ -1,4 +1,4 @@
-from distribuciones import exponencial
+from distribuciones import Exponencial
 import generadores
 import test
 
@@ -93,5 +93,6 @@ for numero in sucesion_cuadrados:
     print(numero)
 
 print("CREO EL OBJETO EXPONENCIAL")
-e = exponencial()
+e = Exponencial()
 print(e.exponencial_valores(sucesion_cuadrados))
+e.graficar()

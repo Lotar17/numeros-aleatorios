@@ -1,3 +1,4 @@
+from distribuciones import exponencial
 import generadores
 import test
 
@@ -90,3 +91,7 @@ print("CUADRADOS")
 sucesion_cuadrados = generadores.generador_metodo_cuadrados(10)
 for numero in sucesion_cuadrados:
     print(numero)
+
+print("CREO EL OBJETO EXPONENCIAL")
+e = exponencial()
+print(e.exponencial_valores(sucesion_cuadrados))
